@@ -14,7 +14,7 @@ serviceWorker.unregister();
 
 function Square(props) {
   return (
-    <button className="square" onClick={props.onClick}>
+    <button className="square" onClick={props.onClick} location={props.location}>
       {props.value}
     </button>
   );
@@ -27,6 +27,7 @@ class Board extends React.Component {
       <Square
         value={this.props.squares[i]}
         onClick={() => this.props.onClick(i)}
+        location={findCoords(i)}
       />
     );
   }
@@ -80,15 +81,17 @@ class Game extends React.Component {
     const winner  = calculateWinner(current.squares);
 
     const moves = history.map((step, move) => {
+      console.log(step)
+      console.log(move)
       const desc = move ?
-        'Go to move #' + move:
+        'Go to move #' + move :
         'Go to game start';
       return (
         <li key={move}>
           <button onClick={() => this.jumpTo(move)}>{desc}</button>
         </li>
       );
-    });
+    })
 
     let status;
     if (winner) {
@@ -151,6 +154,28 @@ function calculateWinner(squares) {
     }
   }
   return null;
+}
+
+function findCoords(index) {
+  if (index === 0) {
+    return ("(1,1)")
+  } else if (index === 1) {
+    return ("(1,2)")
+  } else if (index === 2) {
+    return ("(1,3)")
+  } else if (index === 3) {
+    return ("(2,1)")
+  } else if (index === 4) {
+    return ("(2,2)")
+  } else if (index === 5) {
+    return ("(2,3)")
+  } else if (index === 6) {
+    return ("(3,1)")
+  } else if (index === 7) {
+    return ("(3,2)")
+  } else if (index === 8) {
+    return ("(3,3)")
+  }
 }
 
 // ========================================
